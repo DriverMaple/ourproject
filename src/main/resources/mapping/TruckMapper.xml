@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mooc.dao.TruckDao" >
+  <resultMap id="BaseResultMap" type="com.mooc.entity.Truck" >
+    <constructor >
+      <idArg column="truck_id" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="user_id" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="license" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="max_volume" jdbcType="REAL" javaType="java.lang.Float" />
+      <arg column="max_weight" jdbcType="REAL" javaType="java.lang.Float" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    truck_id, user_id, license, max_volume, max_weight
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from truck
+    where truck_id = #{truckId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from truck
+    where truck_id = #{truckId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.mooc.entity.Truck" >
+    insert into truck (truck_id, user_id, license, 
+      max_volume, max_weight)
+    values (#{truckId,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{license,jdbcType=VARCHAR}, 
+      #{maxVolume,jdbcType=REAL}, #{maxWeight,jdbcType=REAL})
+  </insert>
+  <insert id="insertSelective" parameterType="com.mooc.entity.Truck" >
+    insert into truck
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="truckId != null" >
+        truck_id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="license != null" >
+        license,
+      </if>
+      <if test="maxVolume != null" >
+        max_volume,
+      </if>
+      <if test="maxWeight != null" >
+        max_weight,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="truckId != null" >
+        #{truckId,jdbcType=BIGINT},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="license != null" >
+        #{license,jdbcType=VARCHAR},
+      </if>
+      <if test="maxVolume != null" >
+        #{maxVolume,jdbcType=REAL},
+      </if>
+      <if test="maxWeight != null" >
+        #{maxWeight,jdbcType=REAL},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.mooc.entity.Truck" >
+    update truck
+    <set >
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="license != null" >
+        license = #{license,jdbcType=VARCHAR},
+      </if>
+      <if test="maxVolume != null" >
+        max_volume = #{maxVolume,jdbcType=REAL},
+      </if>
+      <if test="maxWeight != null" >
+        max_weight = #{maxWeight,jdbcType=REAL},
+      </if>
+    </set>
+    where truck_id = #{truckId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.mooc.entity.Truck" >
+    update truck
+    set user_id = #{userId,jdbcType=BIGINT},
+      license = #{license,jdbcType=VARCHAR},
+      max_volume = #{maxVolume,jdbcType=REAL},
+      max_weight = #{maxWeight,jdbcType=REAL}
+    where truck_id = #{truckId,jdbcType=BIGINT}
+  </update>
+</mapper>

@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mooc.dao.UserDao" >
+  <resultMap id="BaseResultMap" type="com.mooc.entity.User" >
+    <constructor >
+      <idArg column="user_id" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="telephone" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="password" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="sex" jdbcType="TINYINT" javaType="java.lang.Byte" />
+      <arg column="id_number" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="type" jdbcType="TINYINT" javaType="java.lang.Byte" />
+      <arg column="d_license" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="f_license" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="place" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="ave_score" jdbcType="REAL" javaType="java.lang.Float" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    user_id, telephone, password, sex, id_number, name, type, d_license, f_license, place, 
+    ave_score
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from user
+    where user_id = #{userId,jdbcType=BIGINT}
+  </select>
+
+  <select id="selectByTelphone" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from user
+    where telephone = #{telephone,jdbcType=BIGINT}
+  </select>
+
+  <select id="selectByTelAndPw" resultMap="BaseResultMap" parameterType="map" >
+    select
+    <include refid="Base_Column_List" />
+    from user
+    where telephone = #{telephone} and password = #{password}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from user
+    where user_id = #{userId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.mooc.entity.User" >
+    insert into user (user_id, telephone, password, 
+      sex, id_number, name, 
+      type, d_license, f_license, 
+      place, ave_score)
+    values (#{userId,jdbcType=BIGINT}, #{telephone,jdbcType=BIGINT}, #{password,jdbcType=VARCHAR}, 
+      #{sex,jdbcType=TINYINT}, #{idNumber,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, 
+      #{type,jdbcType=TINYINT}, #{dLicense,jdbcType=BIGINT}, #{fLicense,jdbcType=BIGINT}, 
+      #{place,jdbcType=VARCHAR}, #{aveScore,jdbcType=REAL})
+  </insert>
+  <insert id="insertSelective" parameterType="com.mooc.entity.User" >
+    insert into user
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="telephone != null" >
+        telephone,
+      </if>
+      <if test="password != null" >
+        password,
+      </if>
+      <if test="sex != null" >
+        sex,
+      </if>
+      <if test="idNumber != null" >
+        id_number,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="dLicense != null" >
+        d_license,
+      </if>
+      <if test="fLicense != null" >
+        f_license,
+      </if>
+      <if test="place != null" >
+        place,
+      </if>
+      <if test="aveScore != null" >
+        ave_score,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="userId != null" >
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="telephone != null" >
+        #{telephone,jdbcType=BIGINT},
+      </if>
+      <if test="password != null" >
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        #{sex,jdbcType=TINYINT},
+      </if>
+      <if test="idNumber != null" >
+        #{idNumber,jdbcType=BIGINT},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=TINYINT},
+      </if>
+      <if test="dLicense != null" >
+        #{dLicense,jdbcType=BIGINT},
+      </if>
+      <if test="fLicense != null" >
+        #{fLicense,jdbcType=BIGINT},
+      </if>
+      <if test="place != null" >
+        #{place,jdbcType=VARCHAR},
+      </if>
+      <if test="aveScore != null" >
+        #{aveScore,jdbcType=REAL},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.mooc.entity.User" >
+    update user
+    <set >
+      <if test="telephone != null" >
+        telephone = #{telephone,jdbcType=BIGINT},
+      </if>
+      <if test="password != null" >
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        sex = #{sex,jdbcType=TINYINT},
+      </if>
+      <if test="idNumber != null" >
+        id_number = #{idNumber,jdbcType=BIGINT},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=TINYINT},
+      </if>
+      <if test="dLicense != null" >
+        d_license = #{dLicense,jdbcType=BIGINT},
+      </if>
+      <if test="fLicense != null" >
+        f_license = #{fLicense,jdbcType=BIGINT},
+      </if>
+      <if test="place != null" >
+        place = #{place,jdbcType=VARCHAR},
+      </if>
+      <if test="aveScore != null" >
+        ave_score = #{aveScore,jdbcType=REAL},
+      </if>
+    </set>
+    where user_id = #{userId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.mooc.entity.User" >
+    update user
+    set telephone = #{telephone,jdbcType=BIGINT},
+      password = #{password,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=TINYINT},
+      id_number = #{idNumber,jdbcType=BIGINT},
+      name = #{name,jdbcType=VARCHAR},
+      type = #{type,jdbcType=TINYINT},
+      d_license = #{dLicense,jdbcType=BIGINT},
+      f_license = #{fLicense,jdbcType=BIGINT},
+      place = #{place,jdbcType=VARCHAR},
+      ave_score = #{aveScore,jdbcType=REAL}
+    where user_id = #{userId,jdbcType=BIGINT}
+  </update>
+</mapper>

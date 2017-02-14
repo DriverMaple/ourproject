@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mooc.dao.OrderDao" >
+  <resultMap id="BaseResultMap" type="com.mooc.entity.Order" >
+    <constructor >
+      <idArg column="order_id" jdbcType="BIGINT" javaType="java.lang.Long" />
+    </constructor>
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from order
+    where order_id = #{orderId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.mooc.entity.Order" >
+    insert into order (order_id)
+    values (#{orderId,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.mooc.entity.Order" >
+    insert into order
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="orderId != null" >
+        order_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="orderId != null" >
+        #{orderId,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+</mapper>
