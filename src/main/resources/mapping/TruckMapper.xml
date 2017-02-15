@@ -16,21 +16,21 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
     <include refid="Base_Column_List" />
-    from truck
+    from t_truck
     where truck_id = #{truckId,jdbcType=BIGINT}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
-    delete from truck
+    delete from t_truck
     where truck_id = #{truckId,jdbcType=BIGINT}
   </delete>
   <insert id="insert" parameterType="com.mooc.entity.Truck" >
-    insert into truck (truck_id, user_id, license, 
+    insert into t_truck (truck_id, user_id, license,
       max_volume, max_weight)
     values (#{truckId,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{license,jdbcType=VARCHAR}, 
       #{maxVolume,jdbcType=REAL}, #{maxWeight,jdbcType=REAL})
   </insert>
   <insert id="insertSelective" parameterType="com.mooc.entity.Truck" >
-    insert into truck
+    insert into t_truck
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="truckId != null" >
         truck_id,
@@ -67,7 +67,7 @@
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.mooc.entity.Truck" >
-    update truck
+    update t_truck
     <set >
       <if test="userId != null" >
         user_id = #{userId,jdbcType=BIGINT},
@@ -85,7 +85,7 @@
     where truck_id = #{truckId,jdbcType=BIGINT}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.mooc.entity.Truck" >
-    update truck
+    update t_truck
     set user_id = #{userId,jdbcType=BIGINT},
       license = #{license,jdbcType=VARCHAR},
       max_volume = #{maxVolume,jdbcType=REAL},

@@ -39,17 +39,6 @@ public class User {
 
     public User() {
         super();
-        userId = null;
-        telephone = null;
-        password = null;
-        sex = null;
-        idNumber = null;
-        name = null;
-        type = null;
-        dLicense = null;
-        fLicense = null;
-        place = null;
-        aveScore = null;
     }
 
     public Long getUserId() {

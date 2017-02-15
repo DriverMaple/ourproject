@@ -237,6 +237,89 @@ public class RequestUtil{
         throwError(name);
         return null;
     }
+
+    /**
+     * 获取byte值，若没有按默认值返回
+     * param request
+     * param name
+     * param defaultValue
+     * return
+     * author zhangyz created on 2014-4-26
+     */
+    public static Byte getByteValue(HttpServletRequest request,String name, Byte... defaultValue){
+        checkAgain(request);
+        String value = request.getParameter(name);
+
+        Byte factValue = null;
+        if (defaultValue != null && defaultValue.length > 0)
+            factValue = defaultValue[0];
+
+        if(StringUtils.isNotBlank(value)){
+            try {
+                return Byte.parseByte(value.trim());
+            }
+            catch(ClassCastException e) {
+                return factValue;
+            }
+        }
+        return factValue;
+    }
+
+    public static Byte getByteValue(Map<String, ?> request, String name, Byte... defaultValue){
+        String value = (String)request.get(name);
+
+        Byte factValue = null;
+        if (defaultValue != null && defaultValue.length > 0)
+            factValue = defaultValue[0];
+
+        if(StringUtils.isNotBlank(value)){
+            try {
+                return Byte.parseByte(value.trim());
+            }
+            catch(ClassCastException e) {
+                return factValue;
+            }
+        }
+        return factValue;
+    }
+
+    /**
+     * 获取整形值，若没有则抛出异常
+     * param request
+     * param name
+     * return
+     * author zhangyz created on 2014-4-26
+     */
+    public static Byte getByteValueMust(HttpServletRequest request, String name){
+        checkAgain(request);
+        String value = request.getParameter(name);
+        if(StringUtils.isNotBlank(value)){
+            try {
+                return Byte.parseByte(value.trim());
+            }
+            catch(ClassCastException e) {
+                throwError(name);
+                return null;
+            }
+        }
+        throwError(name);
+        return null;
+    }
+
+    public static Byte getByteValueMust(Map<String, ?> map, String name){
+        String value = (String)map.get(name);
+        if(StringUtils.isNotBlank(value)){
+            try {
+                return Byte.parseByte(value.trim());
+            }
+            catch(ClassCastException e) {
+                throwError(name);
+                return null;
+            }
+        }
+        throwError(name);
+        return null;
+    }
 	
 	private static Integer getIntValue(String value ,Integer... defaultValue) {
 		Integer factValue = null;

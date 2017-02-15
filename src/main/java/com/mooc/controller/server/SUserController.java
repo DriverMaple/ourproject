@@ -30,13 +30,33 @@ public class SUserController {
         model.addAllAttributes(result);
     }
 
+    /**
+     * 注册
+     * @param req
+     * @param model
+     */
     @RequestMapping(value = "/register",method = RequestMethod.POST)
     public void register(HttpServletRequest req,Model model){
         Long telephone;
         String passwrod;
+        Byte type;
         telephone = RequestUtil.getLongValueMust(req,"tel");
-        passwrod = RequestUtil.getStringValue(req,"pw");
-        Map<String,Object> result = userService.register(telephone,passwrod);
+        passwrod = RequestUtil.getStringValueMust(req,"pw");
+        type = RequestUtil.getByteValueMust(req,"type");
+        Map<String,Object> result = userService.register(telephone,passwrod,type);
+        model.addAllAttributes(result);
+    }
+
+    /**
+     * 用户信息获取
+     * @param req
+     * @param model
+     */
+    @RequestMapping(value = "/get_information",method = RequestMethod.GET)
+    public void getInformation(HttpServletRequest req,Model model){
+        Long telephone;
+        telephone = RequestUtil.getLongValueMust(req,"tel");
+        Map<String,Object> result = userService.getInformation(telephone);
         model.addAllAttributes(result);
     }
 }

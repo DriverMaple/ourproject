@@ -20,10 +20,6 @@ import java.util.Map;
 public class UserServiceImpl implements UserService {
     @Resource
     private UserDao userDao;
-    
-    public User getUser(Long id) {
-        return userDao.selectByPrimaryKey(id);
-    }
 
     /**
      * 登录
@@ -41,6 +37,7 @@ public class UserServiceImpl implements UserService {
             result.put("head", ApiContants.ERROR);
         }else{
             result.put("head",ApiContants.SUCCESS);
+            result.put("userId",user.getUserId());
         }
         return result;
     }
@@ -51,7 +48,7 @@ public class UserServiceImpl implements UserService {
      * @param pw
      * @return
      */
-    public Map<String,Object> register(Long tel,String pw){
+    public Map<String,Object> register(Long tel,String pw,Byte type){
         Map<String,Object> result = new HashMap<String, Object>();
         User test = userDao.selectByTelphone(tel);
         //存在返回错误，不存在插入数据
@@ -59,8 +56,27 @@ public class UserServiceImpl implements UserService {
             User user = new User();
             user.setTelephone(tel);
             user.setPassword(pw);
+            user.setType(type);
             userDao.insert(user);
             result.put("head",ApiContants.SUCCESS);
+        }else{
+            result.put("head",ApiContants.ERROR);
+        }
+        return result;
+    }
+
+    /**
+     * 获取用户信息
+     * @param tel
+     * @return
+     */
+    public Map<String,Object> getInformation(Long tel){
+        Map<String,Object> result = new HashMap<String, Object>();
+        User user = userDao.selectByTelphone(tel);
+        //存在返回错误，不存在插入数据
+        if (!"".equals(user) && user != null){
+            result.put("head",ApiContants.SUCCESS);
+            result.put("information",user);
         }else{
             result.put("head",ApiContants.ERROR);
         }

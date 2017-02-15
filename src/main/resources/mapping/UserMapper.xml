@@ -23,30 +23,30 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
     <include refid="Base_Column_List" />
-    from user
+    from t_user
     where user_id = #{userId,jdbcType=BIGINT}
   </select>
 
   <select id="selectByTelphone" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select
     <include refid="Base_Column_List" />
-    from user
+    from t_user
     where telephone = #{telephone,jdbcType=BIGINT}
   </select>
 
   <select id="selectByTelAndPw" resultMap="BaseResultMap" parameterType="map" >
     select
     <include refid="Base_Column_List" />
-    from user
+    from t_user
     where telephone = #{telephone} and password = #{password}
   </select>
 
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
-    delete from user
+    delete from t_user
     where user_id = #{userId,jdbcType=BIGINT}
   </delete>
   <insert id="insert" parameterType="com.mooc.entity.User" >
-    insert into user (user_id, telephone, password, 
+    insert into t_user (user_id, telephone, password,
       sex, id_number, name, 
       type, d_license, f_license, 
       place, ave_score)
@@ -56,7 +56,7 @@
       #{place,jdbcType=VARCHAR}, #{aveScore,jdbcType=REAL})
   </insert>
   <insert id="insertSelective" parameterType="com.mooc.entity.User" >
-    insert into user
+    insert into t_user
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="userId != null" >
         user_id,
@@ -129,7 +129,7 @@
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.mooc.entity.User" >
-    update user
+    update t_user
     <set >
       <if test="telephone != null" >
         telephone = #{telephone,jdbcType=BIGINT},
@@ -165,7 +165,7 @@
     where user_id = #{userId,jdbcType=BIGINT}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.mooc.entity.User" >
-    update user
+    update t_user
     set telephone = #{telephone,jdbcType=BIGINT},
       password = #{password,jdbcType=VARCHAR},
       sex = #{sex,jdbcType=TINYINT},

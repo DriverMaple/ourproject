@@ -4,27 +4,368 @@
   <resultMap id="BaseResultMap" type="com.mooc.entity.Order" >
     <constructor >
       <idArg column="order_id" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="driver_id" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="owner_id" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="from_p" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="to_p" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="order_type" jdbcType="TINYINT" javaType="java.lang.Byte" />
+      <arg column="level" jdbcType="TINYINT" javaType="java.lang.Byte" />
+      <arg column="super_id" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="state" jdbcType="TINYINT" javaType="java.lang.Byte" />
+      <arg column="goods_type" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="goods_v" jdbcType="REAL" javaType="java.lang.Float" />
+      <arg column="goods_w" jdbcType="REAL" javaType="java.lang.Float" />
+      <arg column="is_urgent" jdbcType="BIT" javaType="java.lang.Boolean" />
+      <arg column="public_t" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="transport_t" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="arrive_t" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="over_t" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="remarks" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="score" jdbcType="REAL" javaType="java.lang.Float" />
+      <arg column="evaluate" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="price" jdbcType="REAL" javaType="java.lang.Float" />
+      <arg column="flag" jdbcType="BIT" javaType="java.lang.Boolean" />
     </constructor>
   </resultMap>
+  <sql id="Base_Column_List" >
+    order_id, driver_id, owner_id, from_p, to_p, order_type, level, super_id, state, 
+    goods_type, goods_v, goods_w, is_urgent, public_t, transport_t, arrive_t, over_t, 
+    remarks, score, evaluate, price, flag
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_order
+    where order_id = #{orderId,jdbcType=BIGINT}
+  </select>
+
+  <select id="selectByOrder" resultMap="BaseResultMap" parameterType="com.mooc.entity.Order" >
+    select
+    <include refid="Base_Column_List" />
+    from t_order
+    <where>
+      <if test="orderId != null" >
+        AND order_id = #{orderId,jdbcType=BIGINT}
+      </if>
+      <if test="driverId != null" >
+        AND driver_id = #{driverId,jdbcType=BIGINT}
+      </if>
+      <if test="ownerId != null" >
+        AND owner_id = #{ownerId,jdbcType=BIGINT}
+      </if>
+      <if test="fromP != null" >
+        AND from_p = #{fromP,jdbcType=VARCHAR}
+      </if>
+      <if test="toP != null" >
+        AND to_p = #{toP,jdbcType=VARCHAR}
+      </if>
+      <if test="orderType != null" >
+        AND order_type = #{orderType,jdbcType=TINYINT}
+      </if>
+      <if test="level != null" >
+        AND level = #{level,jdbcType=TINYINT}
+      </if>
+      <if test="superId != null" >
+        AND super_id = #{superId,jdbcType=BIGINT}
+      </if>
+      <if test="state != null" >
+        AND state = #{state,jdbcType=TINYINT}
+      </if>
+      <if test="goodsType != null" >
+        AND goods_type = #{goodsType,jdbcType=VARCHAR}
+      </if>
+      <if test="goodsV != null" >
+        AND goods_v = #{goodsV,jdbcType=REAL}
+      </if>
+      <if test="goodsW != null" >
+        AND goods_w = #{goodsW,jdbcType=REAL}
+      </if>
+      <if test="isUrgent != null" >
+        AND is_urgent = #{isUrgent,jdbcType=BIT}
+      </if>
+      <if test="publicT != null" >
+        AND public_t = #{publicT,jdbcType=TIMESTAMP}
+      </if>
+      <if test="transportT != null" >
+        AND transport_t = #{transportT,jdbcType=TIMESTAMP}
+      </if>
+      <if test="arriveT != null" >
+        AND arrive_t = #{arriveT,jdbcType=TIMESTAMP}
+      </if>
+      <if test="overT != null" >
+        AND over_t = #{overT,jdbcType=TIMESTAMP}
+      </if>
+      <if test="remarks != null" >
+        AND remarks = #{remarks,jdbcType=VARCHAR}
+      </if>
+      <if test="score != null" >
+        AND score = #{score,jdbcType=REAL}
+      </if>
+      <if test="evaluate != null" >
+        AND evaluate = #{evaluate,jdbcType=VARCHAR}
+      </if>
+      <if test="price != null" >
+        AND price = #{price,jdbcType=REAL}
+      </if>
+      <if test="flag != null" >
+        AND flag = #{flag,jdbcType=BIT}
+      </if>
+    </where>
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
-    delete from order
+    delete from t_order
     where order_id = #{orderId,jdbcType=BIGINT}
   </delete>
   <insert id="insert" parameterType="com.mooc.entity.Order" >
-    insert into order (order_id)
-    values (#{orderId,jdbcType=BIGINT})
+    insert into t_order (order_id, driver_id, owner_id,
+      from_p, to_p, order_type, 
+      level, super_id, state, 
+      goods_type, goods_v, goods_w, 
+      is_urgent, public_t, transport_t, 
+      arrive_t, over_t, remarks, 
+      score, evaluate, price, flag
+      )
+    values (#{orderId,jdbcType=BIGINT}, #{driverId,jdbcType=BIGINT}, #{ownerId,jdbcType=BIGINT}, 
+      #{fromP,jdbcType=VARCHAR}, #{toP,jdbcType=VARCHAR}, #{orderType,jdbcType=TINYINT}, 
+      #{level,jdbcType=TINYINT}, #{superId,jdbcType=BIGINT}, #{state,jdbcType=TINYINT}, 
+      #{goodsType,jdbcType=VARCHAR}, #{goodsV,jdbcType=REAL}, #{goodsW,jdbcType=REAL}, 
+      #{isUrgent,jdbcType=BIT}, #{publicT,jdbcType=TIMESTAMP}, #{transportT,jdbcType=TIMESTAMP}, 
+      #{arriveT,jdbcType=TIMESTAMP}, #{overT,jdbcType=TIMESTAMP}, #{remarks,jdbcType=VARCHAR}, 
+      #{score,jdbcType=REAL}, #{evaluate,jdbcType=VARCHAR}, #{price,jdbcType=REAL}, #{flag,jdbcType=BIT}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.mooc.entity.Order" >
-    insert into order
+    insert into t_order
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="orderId != null" >
         order_id,
+      </if>
+      <if test="driverId != null" >
+        driver_id,
+      </if>
+      <if test="ownerId != null" >
+        owner_id,
+      </if>
+      <if test="fromP != null" >
+        from_p,
+      </if>
+      <if test="toP != null" >
+        to_p,
+      </if>
+      <if test="orderType != null" >
+        order_type,
+      </if>
+      <if test="level != null" >
+        level,
+      </if>
+      <if test="superId != null" >
+        super_id,
+      </if>
+      <if test="state != null" >
+        state,
+      </if>
+      <if test="goodsType != null" >
+        goods_type,
+      </if>
+      <if test="goodsV != null" >
+        goods_v,
+      </if>
+      <if test="goodsW != null" >
+        goods_w,
+      </if>
+      <if test="isUrgent != null" >
+        is_urgent,
+      </if>
+      <if test="publicT != null" >
+        public_t,
+      </if>
+      <if test="transportT != null" >
+        transport_t,
+      </if>
+      <if test="arriveT != null" >
+        arrive_t,
+      </if>
+      <if test="overT != null" >
+        over_t,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+      <if test="score != null" >
+        score,
+      </if>
+      <if test="evaluate != null" >
+        evaluate,
+      </if>
+      <if test="price != null" >
+        price,
+      </if>
+      <if test="flag != null" >
+        flag,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="orderId != null" >
         #{orderId,jdbcType=BIGINT},
       </if>
+      <if test="driverId != null" >
+        #{driverId,jdbcType=BIGINT},
+      </if>
+      <if test="ownerId != null" >
+        #{ownerId,jdbcType=BIGINT},
+      </if>
+      <if test="fromP != null" >
+        #{fromP,jdbcType=VARCHAR},
+      </if>
+      <if test="toP != null" >
+        #{toP,jdbcType=VARCHAR},
+      </if>
+      <if test="orderType != null" >
+        #{orderType,jdbcType=TINYINT},
+      </if>
+      <if test="level != null" >
+        #{level,jdbcType=TINYINT},
+      </if>
+      <if test="superId != null" >
+        #{superId,jdbcType=BIGINT},
+      </if>
+      <if test="state != null" >
+        #{state,jdbcType=TINYINT},
+      </if>
+      <if test="goodsType != null" >
+        #{goodsType,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsV != null" >
+        #{goodsV,jdbcType=REAL},
+      </if>
+      <if test="goodsW != null" >
+        #{goodsW,jdbcType=REAL},
+      </if>
+      <if test="isUrgent != null" >
+        #{isUrgent,jdbcType=BIT},
+      </if>
+      <if test="publicT != null" >
+        #{publicT,jdbcType=TIMESTAMP},
+      </if>
+      <if test="transportT != null" >
+        #{transportT,jdbcType=TIMESTAMP},
+      </if>
+      <if test="arriveT != null" >
+        #{arriveT,jdbcType=TIMESTAMP},
+      </if>
+      <if test="overT != null" >
+        #{overT,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="score != null" >
+        #{score,jdbcType=REAL},
+      </if>
+      <if test="evaluate != null" >
+        #{evaluate,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=REAL},
+      </if>
+      <if test="flag != null" >
+        #{flag,jdbcType=BIT},
+      </if>
     </trim>
   </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.mooc.entity.Order" >
+    update t_order
+    <set >
+      <if test="driverId != null" >
+        driver_id = #{driverId,jdbcType=BIGINT},
+      </if>
+      <if test="ownerId != null" >
+        owner_id = #{ownerId,jdbcType=BIGINT},
+      </if>
+      <if test="fromP != null" >
+        from_p = #{fromP,jdbcType=VARCHAR},
+      </if>
+      <if test="toP != null" >
+        to_p = #{toP,jdbcType=VARCHAR},
+      </if>
+      <if test="orderType != null" >
+        order_type = #{orderType,jdbcType=TINYINT},
+      </if>
+      <if test="level != null" >
+        level = #{level,jdbcType=TINYINT},
+      </if>
+      <if test="superId != null" >
+        super_id = #{superId,jdbcType=BIGINT},
+      </if>
+      <if test="state != null" >
+        state = #{state,jdbcType=TINYINT},
+      </if>
+      <if test="goodsType != null" >
+        goods_type = #{goodsType,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsV != null" >
+        goods_v = #{goodsV,jdbcType=REAL},
+      </if>
+      <if test="goodsW != null" >
+        goods_w = #{goodsW,jdbcType=REAL},
+      </if>
+      <if test="isUrgent != null" >
+        is_urgent = #{isUrgent,jdbcType=BIT},
+      </if>
+      <if test="publicT != null" >
+        public_t = #{publicT,jdbcType=TIMESTAMP},
+      </if>
+      <if test="transportT != null" >
+        transport_t = #{transportT,jdbcType=TIMESTAMP},
+      </if>
+      <if test="arriveT != null" >
+        arrive_t = #{arriveT,jdbcType=TIMESTAMP},
+      </if>
+      <if test="overT != null" >
+        over_t = #{overT,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="score != null" >
+        score = #{score,jdbcType=REAL},
+      </if>
+      <if test="evaluate != null" >
+        evaluate = #{evaluate,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        price = #{price,jdbcType=REAL},
+      </if>
+      <if test="flag != null" >
+        flag = #{flag,jdbcType=BIT},
+      </if>
+    </set>
+    where order_id = #{orderId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.mooc.entity.Order" >
+    update t_order
+    set driver_id = #{driverId,jdbcType=BIGINT},
+      owner_id = #{ownerId,jdbcType=BIGINT},
+      from_p = #{fromP,jdbcType=VARCHAR},
+      to_p = #{toP,jdbcType=VARCHAR},
+      order_type = #{orderType,jdbcType=TINYINT},
+      level = #{level,jdbcType=TINYINT},
+      super_id = #{superId,jdbcType=BIGINT},
+      state = #{state,jdbcType=TINYINT},
+      goods_type = #{goodsType,jdbcType=VARCHAR},
+      goods_v = #{goodsV,jdbcType=REAL},
+      goods_w = #{goodsW,jdbcType=REAL},
+      is_urgent = #{isUrgent,jdbcType=BIT},
+      public_t = #{publicT,jdbcType=TIMESTAMP},
+      transport_t = #{transportT,jdbcType=TIMESTAMP},
+      arrive_t = #{arriveT,jdbcType=TIMESTAMP},
+      over_t = #{overT,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      score = #{score,jdbcType=REAL},
+      evaluate = #{evaluate,jdbcType=VARCHAR},
+      price = #{price,jdbcType=REAL},
+      flag = #{flag,jdbcType=BIT}
+    where order_id = #{orderId,jdbcType=BIGINT}
+  </update>
 </mapper>
