@@ -1,6 +1,7 @@
 package com.mooc.dao;
 
 import com.mooc.entity.Order;
+import com.mooc.entity.OrderExample;
 
 import java.util.List;
 
@@ -18,4 +19,6 @@ public interface OrderDao {
     int updateByPrimaryKey(Order record);
 
     List<Order> selectByOrder(Order order);
+
+    List<Order> selectByOrderExample(OrderExample orderExample);
 }

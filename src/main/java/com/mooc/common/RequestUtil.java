@@ -619,6 +619,89 @@ public class RequestUtil{
 			return s;
 			
 	}
+
+    /**
+     * 获取浮点型值，若没有按默认值返回
+     * param request
+     * param name
+     * param defaultValue
+     * return
+     * Author:zhanggd created on 2014-7-26
+     */
+    public static Float getFloatValue(HttpServletRequest request,String name, Float... defaultValue){
+        checkAgain(request);
+        String value = request.getParameter(name);
+
+        Float factValue = null;
+        if (defaultValue != null && defaultValue.length > 0)
+            factValue = defaultValue[0];
+
+        if(StringUtils.isNotBlank(value)){
+            try {
+                return Float.parseFloat(value);
+            }
+            catch(ClassCastException e) {
+                return factValue;
+            }
+        }
+        return factValue;
+    }
+
+    public static Float getFloatValue(Map<String, ?> request, String name, Float... defaultValue){
+        String value = (String)request.get(name);
+
+        Float factValue = null;
+        if (defaultValue != null && defaultValue.length > 0)
+            factValue = defaultValue[0];
+
+        if(StringUtils.isNotBlank(value)){
+            try {
+                return Float.parseFloat(value);
+            }
+            catch(ClassCastException e) {
+                return factValue;
+            }
+        }
+        return factValue;
+    }
+
+    /**
+     * 获取双浮点型值，若没有则抛出异常
+     * param request
+     * param name
+     * return
+     * author zhangyz created on 2014-4-26
+     */
+    public static Float getFloatValueMust(HttpServletRequest request, String name){
+        checkAgain(request);
+        String value = request.getParameter(name);
+        if(StringUtils.isNotBlank(value)){
+            try {
+                return Float.parseFloat(value.trim());
+            }
+            catch(ClassCastException e) {
+                throwError(name);
+                return null;
+            }
+        }
+        throwError(name);
+        return null;
+    }
+
+    public static Float getFloatValueMust(Map<String, ?> map, String name){
+        String value = (String)map.get(name);
+        if(StringUtils.isNotBlank(value)){
+            try {
+                return Float.parseFloat(value.trim());
+            }
+            catch(ClassCastException e) {
+                throwError(name);
+                return null;
+            }
+        }
+        throwError(name);
+        return null;
+    }
 	
 //    private static String reponseError() {
 //        return JsonUtils.transferJsonResponse(Constants.ERROR,
